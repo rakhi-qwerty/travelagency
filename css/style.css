@@ -1,0 +1,167 @@
+body {
+margin: 0;
+font-family: Arial, sans-serif;
+background: #f5f5f5;
+min-height: 250vh;
+}
+
+
+
+header {
+background: #fff;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 15px 40px;
+border-bottom: 1px solid #eee;
+}
+
+
+
+.logo {
+display: flex;
+align-items: center;
+gap: 10px;
+font-size: 22px;
+font-weight: bold;
+color: #333;
+}
+
+
+.logo-icon {
+width: 18px;
+height: 18px;
+background: #6599e1;
+border-radius: 50%;
+}
+
+
+nav a {
+margin: 0 15px;
+text-decoration: none;
+color: #333;
+font-size: 16px;
+}
+
+
+nav a:hover {
+color: #6599e1;
+}
+
+
+.login-btn {
+background: #6599e1;
+color: #fff;
+padding: 8px 18px;
+border-radius: 8px;
+text-decoration: none;
+font-size: 15px;
+}
+
+
+.login-btn:hover {
+background: #6599e1;
+}
+.auth-box {
+display: flex;
+align-items: center;
+font-size: 16px;
+background: #6599e1;
+padding: 8px 18px;
+border-radius: 8px;
+color: #fff;
+}
+
+
+.auth-box .auth-link {
+color: #fff;
+text-decoration: none;
+padding: 0 4px;
+}
+
+
+.auth-box .auth-link:hover {
+text-decoration: underline;
+}
+
+
+.auth-box .slash {
+padding: 0 4px;
+color: #eafaf3;
+}
+.bg-video {
+  position:absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  color: white;
+  text-align: center;
+  margin-top: 150px;
+  font-size:x-large;
+}
+
+.search-container {
+    width: 450px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: center;
+}
+
+.search-input-box {
+    background: #ffffff;
+    padding: 12px 15px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.search-icon {
+    font-size: 18px;
+    margin-right: 10px;
+    opacity: 0.6;
+}
+
+.search-input-box input {
+    border: none;
+    outline: none;
+    font-size: 16px;
+    width: 100%;
+}
+
+.search-btn {
+    background: #32c7b5;
+    padding: 12px 30px;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.search-btn:hover {
+    background: #28b3a3;
+}
+
+.hero-section {
+    text-align: center;
+    margin-top: -50px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    justify-content: center;
+}
+

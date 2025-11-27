@@ -1,0 +1,64 @@
+
+.review-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+}
+
+.review-box {
+    width: 450px;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 25px rgba(0,0,0,0.12);
+}
+
+.review-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 22px;
+    color: #222;
+    font-weight: 600;
+}
+
+.review-box input,
+.review-box textarea {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 15px;
+    font-size: 15px;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.review-box input:focus,
+.review-box textarea:focus {
+    border-color: #1a944a;
+    box-shadow: 0 0 5px rgba(26,148,74,0.3);
+}
+
+.review-box textarea {
+    height: 130px;
+    resize: none;
+}
+
+.review-box button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 25px;
+    background: #1a944a;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.review-box button:hover {
+    transform: scale(1.04);
+    background: #157a3d;
+}
+

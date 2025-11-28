@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <div class="signup-box" >
+    <h2>Creat Your Account</h2> 
+    <form action="#" method="POST">
+    <input type="text" name="fullname" placeholder="Full Name"required>
+    <input type="email" placeholder="Email Address" required>
+     <input type="text" name="username" placeholder="Choose Username" required>
+            <input type="password" name="password" placeholder="Create Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+
+            <button type="submit" class="signup-btn">Sign Up</button>
+        </form>
+
+        <p class="login-link">
+            Already have an account? <a href="login.html">Login</a>
+        </p>
+    </div>
+
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1350&q=80')
+                        no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .signup-box {
+            width: 390px;
+            background: rgba(255, 255, 255, 0.92);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+
+        .signup-box h2 {
+            color: #0078ff;
+            margin-bottom: 20px;
+        }
+   .signup-box input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .signup-btn {
+            width: 95%;
+            padding: 10px;
+            background: #0078ff;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .signup-btn:hover {
+            background: #005fcc;
+        }
+
+        .login-link {
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #0078ff;
+            text-decoration: none;
+        }
+    </style>
+
+    
+</body>
+</html>

@@ -203,7 +203,6 @@ img{
     margin-bottom: 40px;
 } 
 
-/* GRID LAYOUT — 4 CARDS IN ONE ROW */
 .dest-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -225,7 +224,6 @@ img{
     margin-bottom: 15px;
 }
 
-/* CARD STYLE */
 .card {
     text-align: left;
     object-fit: cover;
@@ -285,14 +283,13 @@ img{
     margin-bottom: 40px;
 }
 
-/* GRID — 3 cards per row */
 .deals-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 35px;
 }
 
-/* CARD STYLE */
+
 .deal-card {
     background: #f5f5f5;
     padding: 18px;
@@ -319,7 +316,6 @@ img{
     margin-bottom: 18px;
 }
 
-/* Bottom area: price + link */
 .deal-bottom {
     display: flex;
     justify-content: space-between;
@@ -328,7 +324,7 @@ img{
 
 .price {
     font-size: 15px;
-    color: #1faa59; /* soft green */
+    color: #1faa59; 
     font-weight: 600;
 }
 
@@ -339,7 +335,7 @@ img{
     text-decoration: none;
 }
 
-/* Responsive */
+
 @media (max-width: 900px) {
     .deals-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -469,7 +465,7 @@ img{
   color: #000;
 }
 
-/* Responsive */
+
 @media (max-width: 768px) {
   .footer-container {
     grid-template-columns: 1fr 1fr;

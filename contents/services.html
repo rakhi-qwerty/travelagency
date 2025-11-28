@@ -3,12 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>NextTrip</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/services.css">
 </head>
 <body>
     
+<header>
+<div class="logo">
+<div class="logo-icon"></div>NextTrip</div>
+
+<nav>
+    <a href="#">Destinations</a>
+    <a href="#">Deals</a>
+    <a href="#">About Us</a>
+    <a href="#">Contact</a>
+    <a href="/index.html">Home</a>
+</nav>
+
+<div class="auth-box">
+   <a href="login.html" class="auth-link left">Login</a>
+   <span class="slash">/</span>
+   <a href="signup.html" class="auth-link right">Signup</a>
+</div>
+</header>
 
 
+<section class="main-wrapper">
+
+
+<h1 class="title">Find Your Perfect Trip</h1>
+<p class="subtitle">Compare flights, trains, cabs, and stays in seconds. One search, every option.</p>
+
+
+
+<div class="tabs">
+<button class="tab active" data-target="flights">✈ Flights</button>
+<button class="tab" data-target="bus">🚌 Bus</button>
+<button class="tab" data-target="cab">🚕 Cab</button>
+<button class="tab" data-target="train">🚆 Train</button>
+<button class="tab" data-target="hotels">🏨 Hotels</button>
+<button class="tab" data-target="packages">📦 Packages</button>
+</div>
+
+
+<!-- Dynamic Content -->
+<div id="tab-content" class="tab-content"></div>
+
+
+</section>
+
+    <script src="/js/services.js"></script>
 
 
 </body>

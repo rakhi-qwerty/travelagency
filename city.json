@@ -1,0 +1,11 @@
+
+[
+  { "city": "Delhi", "state": "Delhi", "country": "India", "code": "DEL" },
+  { "city": "Mumbai", "state": "Maharashtra", "country": "India", "code": "BOM" },
+  { "city": "Bengaluru", "state": "Karnataka", "country": "India", "code": "BLR" },
+  { "city": "Chennai", "state": "Tamil Nadu", "country": "India", "code": "MAA" },
+  { "city": "Kolkata", "state": "West Bengal", "country": "India", "code": "CCU" },
+  { "city": "Hyderabad", "state": "Telangana", "country": "India", "code": "HYD" }
+]
+
+

@@ -1,61 +1,750 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NextTrip</title>
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/services.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NextTrip - Flight Booking</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/services.css">
 </head>
+
 <body>
+  
+
+  <img src="/images/Boat-on-the-Amazon-River-of-Peru.jpg" class="ocean-image" alt="">
+
+  <header>
+    <div class="logo">
+      <div class="logo-icon"></div> NextTrip
+    </div>
+    <nav>
+      <a href="#">Flights</a>
+      <a href="#">Hotels</a>
+      <a href="#">Packages</a>
+    </nav>
+    <div class="auth-box">
+      <a href="#" class="auth-link">Login</a>
+      <span class="slash">/</span>
+      <a href="#" class="auth-link">Signup</a>
+    </div>
+  </header>
+
+  <div class="main-content">
     
-<header>
-<div class="logo">
-<div class="logo-icon"></div>NextTrip</div>
+    <!-- TABS -->
+    <div class="service-tabs" id="tripOptions">
+      <div class="tab active">
+        <i class="fa-solid fa-plane"></i>
+        <span>Flights</span>
+      </div>
+      <div class="tab">
+        <i class="fa-solid fa-hotel"></i>
+        <span>Hotels</span>
+      </div>
+      <div class="tab">
+        <i class="fa-solid fa-train"></i>
+        <span>Trains</span>
+      </div>
+      <div class="tab">
+        <i class="fa-solid fa-bus"></i>
+        <span>Buses</span>
+      </div>
+    </div>
 
-<nav>
-    <a href="/contents/services.html">Destinations</a>
-    <a href="#">Deals</a>
-    <a href="/contents/about.html">About Us</a>
-    <a href="/contents/contect.html">Contact</a>
-    <a href="/index.html">Home</a>
-</nav>
+    <!-- TRIP TYPE -->
+    <div class="flex-box">
+      <div class="option-box">
+        <label><input type="radio" name="trip" value="oneway"> One Way</label>
+        <label><input type="radio" name="trip" value="round"> Round Trip</label>
+        <label><input class="multiCity" type="radio" name="trip" value="multi" checked> Multi City</label>
+      </div>
+      <div class="booking-type">
+        <p class="booking-title">Book International and Domestic Flights</p>
+      </div>
+    </div>
+    
+    <!-- SEARCH INPUTS CONTAINER (Used for both standard and multi-city content) -->
+    <div id="searchInputsContainer">
+      
+      <!-- STANDARD ONE WAY / ROUND TRIP -->
+      <!-- Only shown when state.tripType is NOT 'multi' -->
+      <div class="flight-search-row" id="standardSearch" style="display: none;"> 
+        
+        <div class="flight-col from-col" id="fromCol">
+          <span class="label">FROM</span>
+          <h3 class="city-name" id="fromCity">Delhi</h3>
+          <p class="city-code" id="fromCode">DEL, Indira Gandhi International Airport</p>
+          <div class="city-dropdown" id="fromDropdown">
+            <input type="text" class="citySearch" id="fromSearchInput">
+            <ul class="cityList" id="fromCityList"></ul>
+          </div>
+        </div>
 
-<div class="auth-box">
-   <a href="login.html" class="auth-link left">Login</a>
-   <span class="slash">/</span>
-   <a href="signup.html" class="auth-link right">Signup</a>
-</div>
-</header>
+        <div class="swap-btn" id="swapBtn">
+            <i class="fa-solid fa-right-left"></i>
+        </div>
+
+        <div class="flight-col to-col" id="toCol">
+          <span class="label">TO</span>
+          <h3 class="city-name" id="toCity">Bengaluru</h3>
+          <p class="city-code" id="toCode">BLR, Kempegowda International Airport</p>
+          <div class="city-dropdown" id="toDropdown">
+            <input type="text" class="citySearch" id="toSearchInput">
+            <ul class="cityList" id="toCityList"></ul>
+          </div>
+        </div>
+
+        <div class="departure-col">
+          <span class="label">DEPARTURE</span>
+          <h3 class="dateText" id="departDateDisplay">--</h3>
+          <p class="dayText" id="departDayDisplay">Select Date</p>
+          <input type="date" class="dateInput" id="departDateInput">
+        </div>
+
+        <div class="flight-col return-col muted" id="returnCol">
+          <span class="label">RETURN</span>
+          <h3 class="returnDateText" id="returnDateDisplay">--</h3>
+          <p class="dayText" id="returnDayDisplay">Tap to book return</p>
+          <input type="date" class="returnDateInput" id="returnDateInput" disabled>
+        </div>
+
+        <div class="flight-col traveller-col" id="travellerCol">
+          <span class="label">TRAVELLERS & CLASS</span>
+          <h3 id="classTitle">1 Traveller</h3>
+          <p id="classSub">Economy</p>
+        </div>
+      </div>
+
+      <!-- MULTI CITY CONTAINER -->
+      <!-- This holds the dynamically generated flight segments, each styled as a row -->
+      <div id="multiCityContainer" style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- Multi-city segments will be injected here via JS -->
+      </div>
+      
+      <!-- ADD CITY BUTTON (Updated class name) -->
+      <button class="add-city-btn" id="addCityBtn" style="display: block;">+ ADD ANOTHER CITY</button>
+
+    </div>
+
+    <!-- SHARED TRAVELLER DROPDOWN -->
+    <div class="traveller-panel" id="travellerPanel">
+        <div class="row">
+          <span>Adults (12+ y)</span>
+          <div>
+            <button class="count-btn" onclick="updateTravellers('adult', -1)">-</button>
+            <span id="adultCount" style="margin:0 10px; font-weight:bold;">1</span>
+            <button class="count-btn" onclick="updateTravellers('adult', 1)">+</button>
+          </div>
+        </div>
+        <div class="row">
+          <span>Children</span>
+          <div>
+            <button class="count-btn" onclick="updateTravellers('child', -1)">-</button>
+            <span id="childCount" style="margin:0 10px; font-weight:bold;">0</span>
+            <button class="count-btn" onclick="updateTravellers('child', 1)">+</button>
+          </div>
+        </div>
+        <div class="row" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+          <span style="font-size:12px; font-weight:bold; color:#888;">CHOOSE CLASS</span>
+          <div style="display: flex; gap: 15px;">
+              <label><input type="radio" name="travelClass" value="Economy" checked onchange="updateClass()"> Economy</label>
+              <label><input type="radio" name="travelClass" value="Premium Economy" onchange="updateClass()"> Premium Economy</label>
+              <label><input type="radio" name="travelClass" value="Business" onchange="updateClass()"> Business</label>
+          </div>
+        </div>
+        <button id="travellerDone">APPLY</button>
+    </div>
 
 
-<section class="main-wrapper">
+    <!-- SPECIAL FARES -->
+    <div class="special-fares">
+      <span class="fare-label">SPECIAL FARES:</span>
+      <div class="fare-options" id="fareOptions">
+        <button class="fare-btn active">Regular</button>
+        <button class="fare-btn">Student</button>
+        <button class="fare-btn">Senior Citizen</button>
+        <button class="fare-btn">Armed Forces</button>
+        <button class="fare-btn">Doctors</button>
+      </div>
+    </div>
 
+    <!-- SEARCH BUTTON -->
+    <div class="search-option">
+      <button class="search-btn" id="searchBtn">SEARCH</button>
+    </div>
 
-<h1 class="title">Find Your Perfect Trip</h1>
-<p class="subtitle">Compare flights, trains, cabs, and stays in seconds. One search, every option.</p>
+  </div>
 
+  <!-- RESULTS SECTION -->
+  <div id="searchResult">
+      <div id="loading" style="display:none; text-align:center; padding: 50px;">
+          <i class="fa-solid fa-spinner fa-spin" style="font-size: 30px; color: #1e90ff;"></i>
+          <p style="margin-top:10px; color: #666;">Searching best flights for you...</p>
+      </div>
+      <div class="searchResultContent"></div>
+  </div>
 
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    // --- DATA ---
+    const airports = [
+        { code: 'DEL', city: 'Delhi', name: 'Indira Gandhi International Airport', country: 'India' },
+        { code: 'BOM', city: 'Mumbai', name: 'Chhatrapati Shivaji Maharaj International Airport', country: 'India' },
+        { code: 'BLR', city: 'Bengaluru', name: 'Kempegowda International Airport', country: 'India' },
+        { code: 'MAA', city: 'Chennai', name: 'Chennai International Airport', country: 'India' },
+        { code: 'CCU', city: 'Kolkata', name: 'Netaji Subhas Chandra Bose International Airport', country: 'India' },
+        { code: 'HYD', city: 'Hyderabad', name: 'Rajiv Gandhi International Airport', country: 'India' },
+        { code: 'DXB', city: 'Dubai', name: 'Dubai International Airport', country: 'UAE' },
+        { code: 'LHR', city: 'London', name: 'Heathrow Airport', country: 'UK' },
+        { code: 'JFK', city: 'New York', name: 'John F. Kennedy International Airport', country: 'USA' },
+        { code: 'SIN', city: 'Singapore', name: 'Changi Airport', country: 'Singapore' },
+        { code: 'BKK', city: 'Bangkok', name: 'Suvarnabhumi Airport', country: 'Thailand' },
+        { code: 'IXR', city: 'Ranchi', name: 'Birsa Munda Airport', country: 'India' }
+    ];
 
-<div class="tabs">
-<button class="tab active" data-target="flights">✈ Flights</button>
-<button class="tab" data-target="bus">🚌 Bus</button>
-<button class="tab" data-target="cab">🚕 Cab</button>
-<button class="tab" data-target="train">🚆 Train</button>
-<button class="tab" data-target="hotels">🏨 Hotels</button>
-<button class="tab" data-target="packages">📦 Packages</button>
-</div>
+    // --- STATE ---
+    let state = {
+        tripType: 'multi',
+        // Standard State (kept for switch functionality)
+        from: airports.find(a => a.code === 'DEL'),
+        to: airports.find(a => a.code === 'BLR'),
+        departDate: new Date(),
+        returnDate: null,
+        // Multi City State (initialized with user's request)
+        segments: [
+            { from: airports.find(a=>a.code==='DEL'), to: airports.find(a=>a.code==='BLR'), date: new Date('2026-01-02') },
+            { from: airports.find(a=>a.code==='BLR'), to: null, date: new Date('2026-01-03') }
+        ],
+        // Travellers
+        adults: 1,
+        children: 0,
+        travelClass: 'Economy'
+    };
+    
+    // --- INITIALIZATION ---
+    document.addEventListener('DOMContentLoaded', () => {
+        initializeDate();
+        renderMainLayout();
+        setupGlobalListeners();
+        updateTravellerLabel(document.getElementById('multiClassTitle'), document.getElementById('multiClassSub'));
+    });
 
+    function initializeDate() {
+        // Init Standard Date (for completeness)
+        state.departDate = new Date();
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('departDateInput').setAttribute('min', today);
+        document.getElementById('returnDateInput').setAttribute('min', today);
+    }
 
-<!-- Dynamic Content -->
-<div id="tab-content" class="tab-content"></div>
+    function renderMainLayout() {
+        const stdSearch = document.getElementById('standardSearch');
+        const multiSearch = document.getElementById('multiCityContainer');
+        const addCityBtn = document.getElementById('addCityBtn');
+        const travellerColStandard = document.getElementById('travellerCol');
 
+        // Reset display
+        stdSearch.style.display = 'none';
+        multiSearch.style.display = 'none';
+        addCityBtn.style.display = 'none';
+        
+        // Hide traveller column in standard view when multi-city is active
+        if(travellerColStandard) travellerColStandard.style.display = 'none';
 
-</section>
+        if (state.tripType === 'multi') {
+            multiSearch.style.display = 'flex';
+            addCityBtn.style.display = 'block';
+            renderMultiCityRows();
+        } else {
+            stdSearch.style.display = 'flex';
+            const returnCol = document.getElementById('returnCol');
+            const returnInput = document.getElementById('returnDateInput');
+            travellerColStandard.style.display = 'block';
 
-    <script src="/js/services.js"></script>
+            if (state.tripType === 'round') {
+                returnCol.classList.remove('muted');
+                returnInput.disabled = false;
+            } else {
+                returnCol.classList.add('muted');
+                returnInput.disabled = true;
+                state.returnDate = null;
+                document.getElementById('returnDateDisplay').innerText = "--";
+            }
+            // Update Standard UI
+            document.getElementById('fromCity').innerText = state.from.city;
+            document.getElementById('fromCode').innerText = `${state.from.code}, ${state.from.name}`;
+            document.getElementById('toCity').innerText = state.to.city;
+            document.getElementById('toCode').innerText = `${state.to.code}, ${state.to.name}`;
+            updateTravellerLabel(document.getElementById('classTitle'), document.getElementById('classSub'));
+            
+            if (state.departDate) updateDateDisplay('depart', state.departDate);
+        }
+    }
 
+    // --- MULTI CITY RENDERER ---
+    function renderMultiCityRows() {
+        const container = document.getElementById('multiCityContainer');
+        container.innerHTML = '';
 
+        state.segments.forEach((seg, index) => {
+            const row = document.createElement('div');
+            // Reuse the flight-search-row class structure for styling, but ensure it's not the main standard search
+            row.className = 'flight-search-row multi-city-segment'; 
+            
+            // Format Date
+            const d = seg.date;
+            const dateStr = d ? `${d.getDate()} ${d.toLocaleString('default',{month:'short'})}' ${d.getFullYear().toString().substr(-2)}` : '--';
+            const dayStr = d ? d.toLocaleString('default',{weekday:'long'}) : 'Select Date';
+            const dateVal = d ? d.toISOString().split('T')[0] : '';
+
+            // From Text
+            const fromCity = seg.from ? seg.from.city : 'Select City';
+            const fromCode = seg.from ? `${seg.from.code}, ${seg.from.name}` : 'Select origin';
+
+            // To Text
+            const toCity = seg.to ? seg.to.city : 'Select City';
+            const toCode = seg.to ? `${seg.to.code}, ${seg.to.name}` : 'Select destination';
+
+            row.innerHTML = `
+                <!-- FROM -->
+                <div class="flight-col from-col" onclick="openMultiDropdown(event, ${index}, 'from')">
+                    <span class="label">FROM</span>
+                    <h3 class="city-name">${fromCity}</h3>
+                    <p class="city-code">${fromCode}</p>
+                    <div class="city-dropdown" id="multiFromDrop_${index}">
+                        <input type="text" class="citySearch" onclick="event.stopPropagation()" oninput="filterMultiCity(this.value, ${index}, 'from')">
+                        <ul class="cityList" id="multiFromList_${index}"></ul>
+                    </div>
+                </div>
+
+                <!-- TO -->
+                <div class="flight-col to-col" onclick="openMultiDropdown(event, ${index}, 'to')">
+                    <span class="label">TO</span>
+                    <h3 class="city-name">${toCity}</h3>
+                    <p class="city-code">${toCode}</p>
+                    <div class="city-dropdown" id="multiToDrop_${index}">
+                        <input type="text" class="citySearch" onclick="event.stopPropagation()" oninput="filterMultiCity(this.value, ${index}, 'to')">
+                        <ul class="cityList" id="multiToList_${index}"></ul>
+                    </div>
+                </div>
+
+                <!-- DATE -->
+                <div class="departure-col">
+                    <span class="label">DEPARTURE</span>
+                    <h3 class="dateText">${dateStr}</h3>
+                    <p class="dayText">${dayStr}</p>
+                    <input type="date" class="dateInput" value="${dateVal}" min="${index > 0 ? state.segments[index-1].date.toISOString().split('T')[0] : new Date().toISOString().split('T')[0]}" onchange="updateMultiDate(${index}, this.value)">
+                </div>
+
+                <!-- TRAVELLERS (Only on 1st row, rest are empty columns to maintain flex alignment) -->
+                ${index === 0 ? `
+                <div class="flight-col traveller-col" id="multiTravellerCol" onclick="openTravellerPanel(event)">
+                    <span class="label">TRAVELLERS & CLASS</span>
+                    <h3 id="multiClassTitle">1 Traveller</h3>
+                    <p id="multiClassSub">Economy</p>
+                </div>
+                ` : `<div class="flight-col traveller-col" style="border:none;"></div>`}
+                
+                <!-- REMOVE BTN (Updated class name: remove-city) -->
+                ${index > 1 ? `<i class="fa-solid fa-times remove-city" onclick="removeSegment(${index})"></i>` : ''}
+            `;
+            container.appendChild(row);
+        });
+
+        // Update traveller text for the first row
+        const title = document.getElementById('multiClassTitle');
+        const sub = document.getElementById('multiClassSub');
+        if(title && sub) updateTravellerLabel(title, sub);
+    }
+
+    // --- EVENT HANDLERS & LOGIC ---
+
+    function setupGlobalListeners() {
+        // Radio Buttons
+        document.querySelectorAll('input[name="trip"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                state.tripType = e.target.value;
+                renderMainLayout();
+            });
+        });
+
+        // Add City Btn
+        document.getElementById('addCityBtn').addEventListener('click', () => {
+            if(state.segments.length < 5) {
+                // Determine default date (next day of last segment)
+                const lastDate = state.segments[state.segments.length-1].date || new Date();
+                const nextDate = new Date(lastDate);
+                nextDate.setDate(nextDate.getDate() + 1);
+                
+                // Determine default from (To of last segment)
+                const lastTo = state.segments[state.segments.length-1].to;
+
+                state.segments.push({
+                    from: lastTo,
+                    to: null,
+                    date: nextDate
+                });
+                renderMultiCityRows();
+            }
+        });
+
+        // Traveller Panel Global Close
+        document.getElementById('travellerDone').addEventListener('click', (e) => {
+            e.stopPropagation();
+            document.getElementById('travellerPanel').classList.remove('show');
+        });
+        
+        // Search Button
+        document.getElementById('searchBtn').addEventListener('click', performSearch);
+
+        // Click Outside
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.city-dropdown, .traveller-panel').forEach(el => el.classList.remove('show'));
+        });
+        document.getElementById('travellerPanel').addEventListener('click', e => e.stopPropagation());
+        
+        // Setup standard listeners (even if hidden, for when they switch)
+        const stdFrom = document.getElementById('fromCol');
+        if(stdFrom) stdFrom.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown('fromDropdown'); populateCityList('fromCityList', 'from'); });
+        const stdTo = document.getElementById('toCol');
+        if(stdTo) stdTo.addEventListener('click', (e) => { e.stopPropagation(); toggleDropdown('toDropdown'); populateCityList('toCityList', 'to'); });
+        document.getElementById('fromSearchInput').addEventListener('input', (e) => filterCities(e.target.value, 'fromCityList', (val)=>state.from=val));
+        document.getElementById('toSearchInput').addEventListener('input', (e) => filterCities(e.target.value, 'toCityList', (val)=>state.to=val));
+        document.getElementById('departDateInput').addEventListener('change', (e) => { state.departDate = new Date(e.target.value); updateDateDisplay('depart', state.departDate); });
+        document.getElementById('returnDateInput').addEventListener('change', (e) => { state.returnDate = new Date(e.target.value); updateDateDisplay('return', state.returnDate); });
+        document.getElementById('travellerCol').addEventListener('click', openTravellerPanel);
+    }
+
+    // --- HELPER FUNCTIONS ---
+
+    function openMultiDropdown(e, index, type) {
+        e.stopPropagation();
+        // Close others
+        document.querySelectorAll('.city-dropdown').forEach(el => el.classList.remove('show'));
+        
+        const dropId = type === 'from' ? `multiFromDrop_${index}` : `multiToDrop_${index}`;
+        const listId = type === 'from' ? `multiFromList_${index}` : `multiToList_${index}`;
+        
+        document.getElementById(dropId).classList.add('show');
+        
+        // Populate
+        const list = document.getElementById(listId);
+        list.innerHTML = '';
+        airports.forEach(ap => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span style="font-weight:bold;">${ap.code}</span>, ${ap.city} (${ap.country})`;
+            li.onclick = (ev) => {
+                ev.stopPropagation();
+                if(type === 'from') state.segments[index].from = ap;
+                else state.segments[index].to = ap;
+                renderMultiCityRows();
+            };
+            list.appendChild(li);
+        });
+    }
+
+    function filterMultiCity(text, index, type) {
+        const listId = type === 'from' ? `multiFromList_${index}` : `multiToList_${index}`;
+        const list = document.getElementById(listId);
+        list.innerHTML = '';
+        
+        const filtered = airports.filter(a => 
+            a.city.toLowerCase().includes(text.toLowerCase()) || 
+            a.code.toLowerCase().includes(text.toLowerCase())
+        );
+
+        filtered.forEach(ap => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span style="font-weight:bold;">${ap.code}</span>, ${ap.city} (${ap.country})`;
+            li.onclick = (ev) => {
+                ev.stopPropagation();
+                if(type === 'from') state.segments[index].from = ap;
+                else state.segments[index].to = ap;
+                renderMultiCityRows();
+            };
+            list.appendChild(li);
+        });
+    }
+
+    function updateMultiDate(index, val) {
+        const newDate = new Date(val);
+        state.segments[index].date = newDate;
+        
+        // Enforce sequential date constraint
+        for (let i = index + 1; i < state.segments.length; i++) {
+            const prevDate = state.segments[i-1].date;
+            const currentDate = state.segments[i].date;
+            
+            if (currentDate <= prevDate) {
+                const requiredDate = new Date(prevDate);
+                requiredDate.setDate(requiredDate.getDate() + 1);
+                state.segments[i].date = requiredDate;
+            }
+        }
+        renderMultiCityRows();
+    }
+
+    function removeSegment(index) {
+        state.segments.splice(index, 1);
+        renderMultiCityRows();
+    }
+
+    function openTravellerPanel(e) {
+        e.stopPropagation();
+        document.querySelectorAll('.city-dropdown').forEach(el => el.classList.remove('show'));
+        
+        const panel = document.getElementById('travellerPanel');
+        const rect = e.currentTarget.getBoundingClientRect();
+        const containerRect = document.querySelector('.main-content').getBoundingClientRect();
+        
+        // Position panel under the clicked traveller column, aligned to the right edge of the column
+        const panelLeft = rect.left - containerRect.left;
+        
+        // Maximize width to fit container in mobile view
+        const isMobile = window.matchMedia("(max-width: 768px)").matches;
+        if (isMobile) {
+            panel.style.top = (rect.bottom - containerRect.top + 5) + "px";
+            panel.style.left = "50%";
+            panel.style.transform = "translateX(-50%)";
+            panel.style.width = "90%";
+        } else {
+            panel.style.top = (rect.bottom - containerRect.top + 5) + "px";
+            panel.style.left = panelLeft + "px";
+            panel.style.transform = "none";
+            panel.style.width = "250px";
+        }
+        
+        panel.classList.add('show');
+    }
+
+    function updateTravellers(type, change) {
+        if (type === 'adult') {
+            const newVal = state.adults + change;
+            if (newVal >= 1 && newVal <= 9) state.adults = newVal;
+        } else {
+            const newVal = state.children + change;
+            if (newVal >= 0 && newVal <= 9) state.children = newVal;
+        }
+        document.getElementById('adultCount').innerText = state.adults;
+        document.getElementById('childCount').innerText = state.children;
+        
+        // Update labels for both standard and multi-city traveler sections
+        updateTravellerLabel(document.getElementById('classTitle'), document.getElementById('classSub'));
+        const mTitle = document.getElementById('multiClassTitle');
+        const mSub = document.getElementById('multiClassSub');
+        if(mTitle) updateTravellerLabel(mTitle, mSub);
+    }
+
+    function updateClass() {
+        const radios = document.getElementsByName('travelClass');
+        for (let radio of radios) {
+            if (radio.checked) {
+                state.travelClass = radio.value;
+                break;
+            }
+        }
+        updateTravellers('adult', 0); // Trigger text update
+    }
+
+    function updateTravellerLabel(titleElem, subElem) {
+        if(!titleElem) return;
+        const total = state.adults + state.children;
+        titleElem.innerText = `${total} Traveller${total > 1 ? 's' : ''}`;
+        subElem.innerText = state.travelClass;
+    }
+
+    function toggleDropdown(id) {
+        document.querySelectorAll('.city-dropdown, .traveller-panel').forEach(el => {
+            if(el.id !== id) el.classList.remove('show');
+        });
+        document.getElementById(id).classList.toggle('show');
+    }
+
+    function populateCityList(listId, type) {
+        const list = document.getElementById(listId);
+        list.innerHTML = '';
+        airports.forEach(airport => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span style="font-weight:bold;">${airport.code}</span>, ${airport.city} (${airport.country})`;
+            li.onclick = () => {
+                if(type === 'from') state.from = airport;
+                else state.to = airport;
+                renderMainLayout(); // Re-renders standard UI
+                document.getElementById(listId).parentElement.classList.remove('show');
+            };
+            list.appendChild(li);
+        });
+    }
+
+    function filterCities(text, listId, callback) {
+        const list = document.getElementById(listId);
+        list.innerHTML = '';
+        const filtered = airports.filter(a => 
+            a.city.toLowerCase().includes(text.toLowerCase()) || 
+            a.code.toLowerCase().includes(text.toLowerCase())
+        );
+
+        filtered.forEach(airport => {
+            const li = document.createElement('li');
+            li.innerHTML = `<span style="font-weight:bold;">${airport.code}</span>, ${airport.city} (${airport.country})`;
+            li.onclick = () => {
+                callback(airport);
+                renderMainLayout();
+                document.getElementById(listId).parentElement.classList.remove('show');
+            };
+            list.appendChild(li);
+        });
+    }
+
+    function updateDateDisplay(type, dateObj) {
+        if (!dateObj) return;
+        const dateElem = document.getElementById(type === 'depart' ? 'departDateDisplay' : 'returnDateDisplay');
+        const dayElem = document.getElementById(type === 'depart' ? 'departDayDisplay' : 'returnDayDisplay');
+        
+        const day = dateObj.getDate();
+        const month = dateObj.toLocaleString('default', { month: 'short' });
+        const year = dateObj.getFullYear().toString().substr(-2);
+        const dayName = dateObj.toLocaleString('default', { weekday: 'long' });
+
+        dateElem.innerText = `${day} ${month}' ${year}`;
+        dayElem.innerText = dayName;
+    }
+    
+    // --- MOCK SEARCH ---
+    function performSearch() {
+        const resultContainer = document.querySelector('.searchResultContent');
+        const loader = document.getElementById('loading');
+        
+        resultContainer.innerHTML = '';
+        loader.style.display = 'block';
+        document.getElementById('searchResult').scrollIntoView({ behavior: 'smooth' });
+
+        setTimeout(() => {
+            loader.style.display = 'none';
+            
+            if(state.tripType === 'multi') {
+                // Generate header for Multi
+                const header = document.createElement('h2');
+                header.style.marginBottom = "20px";
+                header.style.color = "#1e90ff";
+                header.innerHTML = `Multi City Trip Summary (${state.adults + state.children} Travellers, ${state.travelClass})`;
+                resultContainer.appendChild(header);
+
+                let routesHtml = '';
+                let totalPrice = 0;
+                let validSegments = state.segments.filter(s => s.from && s.to && s.date);
+
+                if (validSegments.length < 2) {
+                    resultContainer.innerHTML = `<p style="color:red; font-weight:bold;">Please select at least two complete flight segments (Origin, Destination, and Date) for a Multi City booking.</p>`;
+                    return;
+                }
+
+                validSegments.forEach((seg, i) => {
+                    const price = Math.floor(Math.random() * 8000 + 3000);
+                    totalPrice += price;
+                    routesHtml += `
+                        <div style="border-bottom:1px solid #eee; padding: 10px 0; display:flex; justify-content:space-between; align-items:center; background: ${i % 2 === 0 ? '#fafafa' : '#fff'}; border-radius: 8px; margin-bottom: 5px; padding: 15px;">
+                            <div>
+                                <div style="font-weight:bold; color:#1e90ff;">
+                                    ${seg.from.code} <i class="fa-solid fa-arrow-right" style="font-size:10px; margin:0 5px;"></i> ${seg.to.code}
+                                </div>
+                                <div style="font-size:12px; color:#555;">${seg.date.toDateString()}</div>
+                                <div style="font-size:11px; color:#888;">Expected fare for Segment ${i+1}</div>
+                            </div>
+                            <div style="font-size:18px; font-weight:bold; color:#333;">₹${price.toLocaleString()}</div>
+                        </div>
+                    `;
+                });
+
+                const summaryCard = document.createElement('div');
+                summaryCard.className = 'flight-card';
+                summaryCard.style.borderLeft = '5px solid green';
+                summaryCard.style.flexDirection = 'column';
+                summaryCard.style.alignItems = 'flex-start';
+
+                summaryCard.innerHTML = `
+                    <h3 style="color:#008000; margin-bottom: 10px;">Confirmed Route Details:</h3>
+                    <div style="width:100%;">${routesHtml}</div>
+                    <div style="width:100%; margin-top:20px; text-align:right;">
+                        <span style="font-size:24px; font-weight:bold; color:#333;">Estimated Total: ₹${totalPrice.toLocaleString()}</span>
+                        <button class="book-btn" style="background: #008000; margin-left: 20px;">PROCEED TO BOOKING</button>
+                    </div>
+                `;
+                resultContainer.appendChild(summaryCard);
+
+            } else {
+                generateStandardMockFlights();
+            }
+        }, 1500);
+    }
+    
+    function generateStandardMockFlights() {
+        // Mock function for standard search (unchanged)
+        const airlines = [
+            { name: 'IndiGo', logo: '6E' },
+            { name: 'Air India', logo: 'AI' },
+            { name: 'Vistara', logo: 'UK' }
+        ];
+        const container = document.querySelector('.searchResultContent');
+        
+        const header = document.createElement('h2');
+        header.style.marginBottom = "20px";
+        header.style.color = "#1e90ff";
+        header.innerText = `Available Flights from ${state.from.city} to ${state.to.city}`;
+        container.appendChild(header);
+
+        for (let i = 0; i < 5; i++) {
+            const airline = airlines[Math.floor(Math.random() * airlines.length)];
+            const price = Math.floor(Math.random() * (15000 - 4000) + 4000);
+            
+            const depHour = Math.floor(Math.random() * 23);
+            const depMin = Math.floor(Math.random() * 59);
+            const durHour = Math.floor(Math.random() * 4) + 1;
+            const durMin = Math.floor(Math.random() * 59);
+            
+            let arrHour = (depHour + durHour) % 24;
+            let arrMin = (depMin + durMin);
+            if (arrMin >= 60) { arrHour++; arrMin -= 60; }
+            
+            const depTime = `${String(depHour).padStart(2, '0')}:${String(depMin).padStart(2, '0')}`;
+            const arrTime = `${String(arrHour).padStart(2, '0')}:${String(arrMin).padStart(2, '0')}`;
+            const duration = `${durHour}h ${durMin}m`;
+
+            const card = document.createElement('div');
+            card.className = 'flight-card';
+            card.innerHTML = `
+                <div style="display:flex; align-items:center; gap: 10px; width: 25%;">
+                    <div style="width: 40px; height: 40px; border-radius: 4px; background: #eee; display:flex; align-items: center; justify-content: center; font-size: 10px; color: #888;">${airline.logo}</div>
+                    <div>
+                        <div style="font-weight:bold; font-size:14px;">${airline.name}</div>
+                        <div style="font-size:11px; color:#999;">${airline.logo}-${Math.floor(Math.random()*900)+100}</div>
+                    </div>
+                </div>
+                
+                <div style="display:flex; align-items:center; gap: 20px; width: 40%; justify-content: center; text-align: center;">
+                    <div style="text-align:right;">
+                        <div style="font-size: 20px; font-weight: bold;">${depTime}</div>
+                        <div style="font-size:12px; font-weight:bold;">${state.from.city}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:11px; color:#999; text-align:center;">${duration}</div>
+                        <div style="border-bottom: 1px solid #ddd; width: 60px; margin: 0 10px; display: inline-block;"></div>
+                        <div style="font-size:11px; color:#999; text-align:center;">Non-stop</div>
+                    </div>
+                    <div style="text-align:left;">
+                        <div style="font-size: 20px; font-weight: bold;">${arrTime}</div>
+                        <div style="font-size:12px; font-weight:bold;">${state.to.city}</div>
+                    </div>
+                </div>
+
+                <div style="width: 20%; text-align: right;">
+                    <div style="font-size: 22px; font-weight: bold; color: #1e90ff;">₹ ${price.toLocaleString('en-IN')}</div>
+                    <button style="background: #1e90ff; color: white; border: none; padding: 8px 25px; border-radius: 20px; font-weight: bold; cursor: pointer; margin-top: 5px;">BOOK</button>
+                </div>
+            `;
+            container.appendChild(card);
+        }
+    }
+  </script>
 </body>
 </html>
